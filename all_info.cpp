@@ -38,9 +38,6 @@ void All_info::Repeat(QString table, W_ier* ier_sys)
     }
 
 
-
-
-
     QWidget* wid = new QWidget;
     QVBoxLayout *layV = new QVBoxLayout(wid);
     tabWid->addTab(wid, "Онтология");
@@ -91,7 +88,6 @@ void All_info::Repeat(QString table, W_ier* ier_sys)
 
 QWidget *All_info::w_sql(QString table, W_ier* ier_sys)
 {
-
 
     QWidget* wid = new QWidget;
     QVBoxLayout* lay = new QVBoxLayout(wid);
@@ -284,6 +280,7 @@ void All_info::redact_ontl()
 
 void All_info::c1_change(QModelIndex index)
 {
+    //Переключение значения в с1
     if (index.column() != 6)
     {
         return;
@@ -302,6 +299,7 @@ void All_info::c1_change(QModelIndex index)
 
 void All_info::term_info(QModelIndex index)
 {
+    //Вывод информации о термине
     QModelIndex in = index;
     int row = in.row();
 
@@ -321,6 +319,7 @@ void All_info::term_info(QModelIndex index)
 
 void All_info::term1_conect(QModelIndex index)
 {
+    //Выбор термина 1
     QModelIndex in = index;
     int row = in.row();
 

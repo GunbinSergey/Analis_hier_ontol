@@ -1,6 +1,6 @@
 #ifndef SESEVI_H
 #define SESEVI_H
-
+//Виджет выбора термина
 #include <QObject>
 #include <QWidget>
 #include <QSqlDatabase>

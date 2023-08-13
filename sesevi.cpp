@@ -111,6 +111,7 @@ void SeSeVi::reset_filter()
 
 void SeSeVi::set_filter()
 {
+    //Фильтрация онтологии
     reset_filter();
 
     //QString filtr_col;

@@ -1,6 +1,6 @@
 #ifndef W_ier_H
 #define W_ier_H
-
+//Виджет проверки иерархической связи
 #include <QObject>
 #include <QWidget>
 #include <QWidget>

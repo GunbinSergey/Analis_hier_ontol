@@ -36,12 +36,12 @@ QWidget* Redactor::wind_from_file()
 
    QLabel* lab_desc = new QLabel("Выберите поиск файла");
 
-
     return wid;
 }
 
  QWidget* Redactor::wind_redactor()
  {
+     //Создание оформления редактора
      QWidget* wid = new QWidget;
      QVBoxLayout* lay = new QVBoxLayout;
      wid->setLayout(lay);
@@ -69,32 +69,23 @@ QWidget* Redactor::wind_from_file()
       index = model->index(0,ugl_but);
      // qtv->setIndexWidget(index, create_button("-"));
 
-
-
-     //insert_row();
-      //insert_row();
-      //insert_row();
       return wid;
  }
 
 
 void Redactor::SQL_To_Redact(QString table_name)
 {
+    //Загрузка сущствующей онтологии для редактирования
     QString Hcod;
 
     QSqlTableModel* sql_model = new QSqlTableModel;
     sql_model->setTable(table_name);
-
-
     SQL_Redact(0, sql_model, "test","0");
-
-
 }
 
 void Redactor::SQL_Redact(int father_row, QSqlTableModel* mod,QString fath_name, QString fath_cod, QModelIndex parent)
 {
-
-
+    //Перенос онтологии на редактирования
     QString filter = "(Hcod LIKE '"+ fath_cod +"._')";
     if (fath_cod == "0")
     {
@@ -158,23 +149,19 @@ void Redactor::SQL_Redact(int father_row, QSqlTableModel* mod,QString fath_name,
 
 void Redactor::Add_buttons(QModelIndex index, int num_row, QString par_code, bool inside)
 {
+    //Добавление кнопок для редактирования новой записи
     qtv->setIndexWidget(model->index(num_row,add_but, index), create_button("+"));
     qtv->setIndexWidget(model->index(num_row,del_but, index), create_button("V"));
     qtv->setIndexWidget(model->index(num_row,ugl_but, index), create_button("-"));
 
 
     QString hcod2 = new_hcod(par_code,  num_row,  inside);
-
-    //index = model->index(num_row, hcod, index.parent());
-    //QString hcod_parent = model->data(index).toString();
-
-
-
     model->setData(model->index(num_row, hcod, index), hcod2);
 }
 
 QWidget *Redactor::create_button(QString label) const
 {
+    //Метод вставки кнопки
     QWidget* wgt = new QWidget;
     QBoxLayout* l = new QHBoxLayout;
     QPushButton* btn = new QPushButton( label );
@@ -202,7 +189,7 @@ QWidget *Redactor::create_button(QString label) const
 
 void Redactor::in_insert_row()
 {
-
+    //При углублённой вставки (подчинённая вершина)
     QModelIndex index;
     if( QPushButton* btn = qobject_cast< QPushButton* >( sender() ) )
     {
@@ -237,6 +224,7 @@ void Redactor::in_insert_row()
 
 void Redactor::insert_row()
 {
+    //При вставке на тот же уровень
     QModelIndex index;
     if( QPushButton* btn = qobject_cast< QPushButton* >( sender() ) )
     {
@@ -262,7 +250,7 @@ void Redactor::insert_row()
 
 void Redactor::Save_inSQL()
 {
-
+    //Сохранение онтологии для дальнейшего использования
     QMessageBox mes;
     mes.setWindowTitle("ОШИБКА!");
     mes.setText("Невозможно сохранить онтологию с таким именем");
@@ -316,6 +304,7 @@ void Redactor::Save_inSQL()
 
 void Redactor::remove_row()
 {
+    //Удаление строки из таблицы
     if( QPushButton* btn = qobject_cast< QPushButton* >( sender() ) )
     {
         QModelIndex index = qtv->indexAt( btn->parentWidget()->pos() );
@@ -331,6 +320,7 @@ void Redactor::remove_row()
 
 void Redactor::open_ontl()
 {
+    //Диалог переход к работе
     QMessageBox mes;
     mes.setWindowTitle("Открыть созданую онтологию?");
     mes.setText("Хотите продолжить работу с созданной онтологией");
@@ -351,6 +341,7 @@ void Redactor::open_ontl()
 
 void Redactor::CreateTable(QString tab_name)
 {
+    //Создание заготовки для онтологии
     QSqlQuery query;
 
     QString str_f;
@@ -368,9 +359,7 @@ void Redactor::CreateTable(QString tab_name)
     "Keyword Char(75) NOT NULL,"
     "Mother Char(75),"
     "Pr Char(1))";
-    //"C0 Char(2),"
-    //"C1 Char(2)"
-    //")";
+
 
     if (!query.exec(str_f))
     {
@@ -382,6 +371,7 @@ void Redactor::CreateTable(QString tab_name)
 
 void Redactor::file_to_SQL(QString table)
 {
+    //Преобразования онтологии из файла в SQL
     int size = data_file->rowCount();
 
     QSqlQuery query;
@@ -405,6 +395,7 @@ void Redactor::file_to_SQL(QString table)
 
 
 void Redactor::SMI_to_SQL (QString tab_name, QModelIndex parent) {
+    //Преобразования в SQL модель
     QSqlQuery query;
     QString str_f = "INSERT INTO " + tab_name + "(Hcod, Keyword)"
             "VALUES ('%1', '%2')";
@@ -434,6 +425,7 @@ void Redactor::SMI_to_SQL (QString tab_name, QModelIndex parent) {
 
 void Redactor::Update_Hcod(QModelIndex parent, QString father_cod)
 {
+    //Перерасчёт hcod для детей одного отца
     for(int r = 0; r < model->rowCount(parent); ++r) {
         QModelIndex index = model->index(r, 0, parent);
 
@@ -453,6 +445,7 @@ void Redactor::Update_Hcod(QModelIndex parent, QString father_cod)
 
 QString Redactor::new_hcod(QString father, int row_now, bool inside)
 {
+    //Перерасчёт hcod для термина
     QString hcod2;
     if (inside)
     {
@@ -486,6 +479,7 @@ QString Redactor::new_hcod(QString father, int row_now, bool inside)
 
 void Redactor::S_ontl_name(QString name)
 {
+    //Сохранение имени онтологии
     QString all_file;
     QFile file("ontls.txt");
 
@@ -516,6 +510,7 @@ void Redactor::S_ontl_name(QString name)
 
 void Redactor::Dop_info(QString table)
 {
+    //Расчёт дополнительных полей в отнтологии
      QSqlTableModel* model = new QSqlTableModel;
      model->setTable(table);
      model->setEditStrategy(QSqlTableModel::OnFieldChange);
@@ -570,6 +565,7 @@ void Redactor::Dop_info(QString table)
 
 void Redactor::reset_filter(QSqlTableModel* model)
 {
+    //Очистка фильтра
     model->setFilter("");
     model->select();
 }
@@ -577,11 +573,13 @@ void Redactor::reset_filter(QSqlTableModel* model)
 
 Redactor::Redactor(QWidget *parent) : QWidget(parent)
 {
+    //Создание новой
     Reset();
 }
 
 Redactor::Redactor(QString table_name, QWidget *parent)
 {
+    //При открытие существуюей таблицы
     Reset();
     ple->setText(table_name);
     SQL_To_Redact(table_name);

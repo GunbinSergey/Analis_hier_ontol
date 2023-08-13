@@ -1,5 +1,6 @@
 #ifndef ALL_INFO_H
 #define ALL_INFO_H
+//Блок для вывода информации об онтологии
 
 #include <QWidget>
 #include <QLabel>
@@ -15,7 +16,6 @@
 #include <QTextEdit>
 #include <QLineEdit>
 #include <QCheckBox>
-//#include <QRadioButton>
 #include <QRadioButton>
 #include <QPushButton>
 #include <QMessageBox>
@@ -24,9 +24,13 @@
 #include <cmath>
 #include <QStandardItemModel>
 #include <QMessageBox>
+
 #include "w_ier.h"
+//SearchSelectView модуль выбора терминов
 #include "sesevi.h"
+//WidgetCheckRealtiom виджет проверки связи
 #include "wid_cherel.h"
+//Хранилище найденных закономерностей
 #include "repriz.h"
 
 class All_info: public QWidget

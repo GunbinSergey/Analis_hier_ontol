@@ -1,5 +1,6 @@
 #ifndef REPRIZ_H
 #define REPRIZ_H
+//Хранилище найденных связей
 
 #include <QWidget>
 #include <QObject>

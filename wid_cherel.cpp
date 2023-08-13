@@ -61,6 +61,7 @@ QString Wid_CheRel::ChatGpt_about_real(QString hcod1, QString hcod2)
 
 void Wid_CheRel::Check_real()
 {
+    //Вывод результата проверки
     QString hcod1 = hcod_1->text();
     QString hcod2 = hcod_2->text();
 
@@ -81,4 +82,9 @@ void Wid_CheRel::Check_real()
         saver->rep_AddRow(temp);
     }
 
+}
+
+QString Wid_CheRel::check_real_gpt()
+{
+    return "";
 }

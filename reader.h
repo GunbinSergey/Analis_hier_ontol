@@ -1,5 +1,6 @@
 #ifndef READER_H
 #define READER_H
+//Блок считывания онтологии
 
 #include <QObject>
 #include <QWidget>

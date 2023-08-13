@@ -26,8 +26,9 @@
 #include <QTreeView>
 
 
-
+//Блок для вывода информации об онтологии
 #include "all_info.h"
+//Блок ввода/считывания онтологии
 #include "redactor.h"
 
 QT_BEGIN_NAMESPACE
@@ -60,17 +61,11 @@ private:
     bool CheckConnection();
     QWidget* last_files();
     QWidget* show_inform(QString table_name);
-    //void Repeat(QString table, W_ier* ier_sys);
-    //QWidget* w_sql(QString table, W_ier* ier_sys);
     void reset_filter();
 private slots:
     void open_ont(QModelIndex index = QModelIndex());
     void m_create();
     void m_open();
     void m_save();
-    //void set_filter();
-    //void add_cog();
-    //void redact_ontl();
-    //void c1_change(QModelIndex index = QModelIndex());
 };
 #endif // MAINWINDOW_H

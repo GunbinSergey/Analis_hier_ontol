@@ -61,6 +61,7 @@ Reader::Reader(QWidget *parent) : QWidget(parent)
 
 void Reader::chose_file()
 {
+    //Выбор файла для чтения
     QFileDialog* fd = new QFileDialog();
     fd->setNameFilter("*.txt");
      QString fileName = fd->getOpenFileName();
@@ -69,6 +70,7 @@ void Reader::chose_file()
 
 void Reader::open_file()
 {
+    //Открытие файла с выводом содержимого
     QString path = file_path->text();
     QList<QString>* data = data_file(path);
     QList<QString>::iterator it = data->begin();
@@ -95,6 +97,7 @@ void Reader::open_file()
 
 QList<QString>* Reader::data_file(QString path)
 {
+    //Считывание данных
     QList<QString>* list = new QList<QString>;
     QFile file(path);
     if (file.open(QIODevice::ReadOnly))

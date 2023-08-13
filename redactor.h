@@ -1,6 +1,6 @@
 #ifndef REDACTOR_H
 #define REDACTOR_H
-
+//Модуль ввода онтологии
 #include <QWidget>
 #include <QLabel>
 #include <QVBoxLayout>
@@ -25,7 +25,7 @@
 
 #include<QTabWidget>
 
-
+//Виджет считывания онтологии из txt файла
 #include "reader.h"
 
 

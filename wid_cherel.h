@@ -1,6 +1,6 @@
 #ifndef WID_CHEREL_H
 #define WID_CHEREL_H
-
+//Виджет проверки связкй через chatgpt
 #include <QWidget>
 #include <QObject>
 #include <QWidget>
@@ -36,8 +36,11 @@ public:
 
     Repriz* saver;
 
+    QString check_real_gpt();
+
 private slots:
     void Check_real();
+
 
 };
 

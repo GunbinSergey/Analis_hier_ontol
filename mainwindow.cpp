@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 bool MainWindow::CheckConnection()
 {
+    //Подключаем базу данных
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("Laba");
     db.setHostName("localhost");
@@ -34,7 +35,7 @@ bool MainWindow::CheckConnection()
 
 void MainWindow::Create_Menu()
 {
-    //this->createPopupMenu();
+    //Заполнение меню бара
     QMenuBar* menuBar = this->menuBar();
     QMenu* pmenu_f = new QMenu("Файл");
     pmenu_f->addAction("Создать", this, SLOT(m_create()));
@@ -58,6 +59,7 @@ void MainWindow::m_redact(QString table)
 
 QWidget *MainWindow::last_files()
 {
+    //Заполнения виджета с последними файлами
     QWidget* wlast_files = new QWidget;
     QVBoxLayout* lay = new QVBoxLayout(wlast_files);
     QLabel* title = new QLabel("<font size = 30> <CENTER> СИСТЕМА ПО ИССЛЕДОВАНИЮ ОНТОЛОГИИ С ПОМОЩЬЮ СТОРОННЕЙ <br> ИНТЕЛЛЕКТУАЛЬНОЙ СИСТЕМЫ </CENTER> </font>");
@@ -65,9 +67,6 @@ QWidget *MainWindow::last_files()
     lay->addWidget(title);
     QLabel* plastf = new QLabel("<CENTER> <H1> Список онтологий </H1> </CENTER>");
     lay->addWidget(plastf);
-
-    //lay->setStretch(1, 5);
-   // lay->setStretch(2, 600);
 
     QList<QString> l_fl(l_ontl());
     qlm = new QStandardItemModel(l_fl.size(),2);
@@ -94,8 +93,6 @@ QWidget *MainWindow::last_files()
     lview->setColumnWidth(1, 400);
     lview->setColumnWidth(2, 150);
 
-
-     //open_ont
     connect(lview, SIGNAL(clicked(QModelIndex)),SLOT(open_ont(QModelIndex)));
 
     QPushButton* but_create = new QPushButton("Добавить новую");
@@ -112,6 +109,7 @@ QWidget *MainWindow::last_files()
 
 QList<QString> MainWindow::l_ontl()
 {
+    //Формирования списка созданных онтологий
     QList<QString> list;
     QFile file("ontls.txt");
 
@@ -128,24 +126,20 @@ QList<QString> MainWindow::l_ontl()
 
 void MainWindow::open_ontl(QString table)
 {
+    //Открытие созданной онтологии из другого виджета
     All_info* wid = new All_info(table);
-
-
-    //QWidget* all_info = show_inform(table);
-    //all_info->resize(750,300);
     this->setCentralWidget(wid);
 }
 
 void MainWindow::open_ont(QModelIndex index)
 {
-    qDebug() << "It's just work";
+    //Выбор онтологии из таблицы
     int row = index.row();
     int col = index.column();
 
     QString str = qlm->data(qlm->index(row, 0)).toString();
     if (col == 0)
     {
-
        All_info* wid = new All_info(str);
        this->setCentralWidget(wid);
     }
@@ -161,6 +155,7 @@ void MainWindow::open_ont(QModelIndex index)
 }
 void MainWindow::m_create()
 {
+    //Переход к созданию новой онтологии
      Redactor* wid = new Redactor;
      //wid->show();
      this->setCentralWidget(wid);
@@ -168,8 +163,9 @@ void MainWindow::m_create()
 
 void MainWindow::m_open()
 {
+    //Открытие окна выбора онтологии
     QWidget* wid2 = last_files();
-    wid2->setWindowTitle("Wid2");
+    //wid2->setWindowTitle("Wid2");
     this->setCentralWidget(wid2);
 }
 
@@ -186,20 +182,17 @@ MainWindow::~MainWindow()
 
 void MainWindow::del_ont(QString ont_name)
 {
-
+    //Удаление созданной онтологии
     QFile file("ontls.txt");
     QTextStream fileData(&file);
-    //fileData.setCodec()
-    file.open(QIODevice::Text | QIODevice::ReadWrite); // open for read and write
-    //fileData = file.readAll(); // read all the data into the byte array
-    QString text = fileData.readAll(); // add to text string for easy string replace
+    file.open(QIODevice::Text | QIODevice::ReadWrite);
+    QString text = fileData.readAll();
     file.close();
 
     QFile file2("ontls.txt");
     QTextStream out(&file2);
     file2.open(QIODevice::Text | QIODevice::WriteOnly);
-    text = text.replace(QString(ont_name + "\n"), QString("")); // replace text in string
-    //file.seek(0); // go to the beginning of the file
+    text = text.replace(QString(ont_name + "\n"), QString(""));
     out << text;
     file2.close();
 
