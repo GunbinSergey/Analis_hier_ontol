@@ -69,7 +69,7 @@ void Wid_CheRel::Check_real()
     QString keyword2 = term_2->text();
 
     QString title = "Информации о связях между: " + keyword1 + " и " + keyword2;
-    QString descr = ChatGpt_about_real(hcod1, hcod2);
+    QString descr = check_real_gpt(keyword1, keyword2);
     QMessageBox mes;
     mes.setWindowTitle("Мнение ChatGPT");
     mes.setText(title);
@@ -84,7 +84,41 @@ void Wid_CheRel::Check_real()
 
 }
 
-QString Wid_CheRel::check_real_gpt()
+QString Wid_CheRel::check_real_gpt(QString term1, QString term2)
 {
-    return "";
+    QProcess *proc = new QProcess;
+    QStringList params;
+
+    QTextCodec *codec = QTextCodec::codecForName("Windows-1251");
+
+    params << "-ts";
+    params << term1;
+    params << term2;
+    proc->start("GPT_help.exe",params);
+    qDebug() << proc->state();
+    proc->waitForFinished();
+    QByteArray result = proc->readAllStandardOutput();
+    QString answer = codec->toUnicode(result);
+    qDebug() << proc->readAllStandardError();
+    qDebug() << answer;
+    return answer;
+}
+
+QString Wid_CheRel::about_term(QString term)
+{
+    QProcess *proc = new QProcess;
+    QStringList params;
+
+    QTextCodec *codec = QTextCodec::codecForName("Windows-1251");
+
+    params << "-ts";
+    params << term;
+    proc->start("GPT_help.exe",params);
+    qDebug() << proc->state();
+    proc->waitForFinished();
+    QByteArray result = proc->readAllStandardOutput();
+    QString answer = codec->toUnicode(result);
+    qDebug() << proc->readAllStandardError();
+    qDebug() << answer;
+    return answer;
 }

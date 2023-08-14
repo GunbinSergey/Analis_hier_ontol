@@ -16,6 +16,10 @@
 #include <QRadioButton>
 #include <QMessageBox>
 #include <QLabel>
+#include <QProcess>
+#include <QDebug>
+#include <QTextCodec>
+
 #include "repriz.h"
 
 class Wid_CheRel : public QWidget
@@ -36,7 +40,8 @@ public:
 
     Repriz* saver;
 
-    QString check_real_gpt();
+    QString check_real_gpt(QString term1, QString term2);
+    QString about_term(QString);
 
 private slots:
     void Check_real();

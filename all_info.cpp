@@ -307,7 +307,7 @@ void All_info::term_info(QModelIndex index)
     QString keyword = serch_model->data(serch_model->index(row,2)).toString();
 
     QString title = "Информации о термине: " + keyword;
-    QString descr = ChatGPt_about_term(hcod);
+    QString descr = cheRel->about_term(keyword);
     QMessageBox mes;
     mes.setWindowTitle("Мнение ChatGPT");
     mes.setText(title);
